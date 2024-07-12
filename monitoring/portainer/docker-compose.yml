@@ -1,0 +1,25 @@
+version: "3.8"
+
+## If you're using my nginx-proxy-manager
+## You might want to enable the network below for portainer to work with a domain name
+## Then you cannot access portainer from browser: host-ip:port (E.g: 20.10.1.5:9000)
+# networks:
+#   default:
+#     name: nginx
+#     external: true
+
+volumes:
+  portainer_data:
+    driver: local
+
+services:
+  portainer:
+    container_name: portainer
+    restart: unless-stopped
+    image: portainer/portainer-ce:latest
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
